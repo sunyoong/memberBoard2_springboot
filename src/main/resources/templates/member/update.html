@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        // 비밀번호 일치여부 확인
+        // function update(){
+        //     // 입력한 PW값
+        //     const memberPW = $("#memberPassword").val();
+        //     console.log(memberPW);
+        //
+        //     // DB에 저장된 PW
+        //     const DBpw = '[[${member.memberPassword}]]';
+        //     console.log(DBpw);
+        //
+        //     if(memberPW == DBpw){
+        //         update_form.submit();
+        //     } else{
+        //         alert('비밀번호가 틀렸어요');
+        //     }
+        //
+        // }
+
+
+        function update2(){
+            // ajax활용해서 해보기
+            const id = $("#memberId").val();
+            const email = $("#memberEmail").val();
+            // 비밀번호 확인
+            const password = $("#memberPassword").val();
+            // db비밀번호
+            const DBpw = '[[${member.memberPassword}]]';
+            // 변경할 비밀번호
+            const pwChange = $("#pwChange").val();
+            const name = $("#memberName").val();
+            const file = $("#memberFile").val();
+
+            const updateData = JSON.stringify({
+                memberId : id,
+                memberEmail : email,
+                memberPassword : pwChange,
+                memberName : name,
+                memberFile : file
+            });
+
+            console.log(updateData);
+            console.log(password);
+            console.log(DBpw);
+
+            const reqUrl = "/member/" + id;
+
+
+            if(password == DBpw){
+                // ajax로 값 넘김
+                $.ajax({
+                    type: 'put',
+                    url : reqUrl,
+                    contentType : "application/json",
+                    data : updateData,
+                    success : function(result){
+                        console.log(result);
+                        location.href="/member/" + id;
+                    },
+                    error: function(){
+                        alert('ajax실패');
+                    }
+                })
+            } else{
+                alert('비밀번호가 틀렸습니다.');
+            }
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+<h2>update.jsp</h2>
+<form th:action="@{|/member/update/${member.memberId}|}" method="get" th:object="${member}" enctype="multipart/form-data" name="update_form">
+<!--<form enctype="multipart/form-data">-->
+    <input type="hidden" id="memberId" th:value="${session.loginId}" >
+    이메일: <input type="text" id="memberEmail" th:value="${session.loginEmail}" readonly ><br>
+    비밀번호 확인: <input type="text" id="memberPassword" th:text="${member.memberPassword}"><br>
+    변경할 비밀번호: <input type="text" id="pwChange">
+    <input type="text" id="memberName" th:value="${member.memberName}"><br>
+    프로필사진 <input type="file" id="memberFile" th:value="${member.memberFile}"><br>
+
+<!--    <input type="button" value="수정" onclick="update()">-->
+    <input type="button" value="수정" onclick="update2()">
+
+</form>
+</body>
+</html>

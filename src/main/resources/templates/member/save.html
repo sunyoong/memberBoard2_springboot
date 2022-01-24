@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+        .fieldError{
+            color: red;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        function emailCheck(){
+            console.log("이메일확인");
+            const memberEmail = document.getElementById('emailCk').value;
+            console.log(memberEmail);
+            const emailResult = document.getElementById('emailResult');
+
+
+
+            $.ajax({
+                type:"post",
+                url: "/member/emailCheck/",
+                data: {"memberEmail" : memberEmail},
+                dataType: "text",
+                success: function(result){
+                    console.log('에이작스 성공');
+                    console.log(result);
+                    emailResult.innerHTML = "사용 가능한 이메일입니다.";
+                    emailResult.style.color = "green";
+
+                },
+                error: function(){
+                    emailResult.innerHTML = "중복된 이메일입니다.";
+                    emailResult.style.color ="red";
+                }
+            });
+
+        }
+
+        function membersave(){
+            console.log("membersave");
+
+            save_form.submit();
+        }
+
+
+    </script>
+</head>
+<body>
+<form action="/member/save" method="post" th:object="${member}" enctype="multipart/form-data" name="save_form">
+    <div th:if="${#fields.hasGlobalErrors()}">
+        <p class="fieldError" th:each="err: ${#fields.globalErrors()}" th:text="${err}"></p>
+    </div>
+    <input type="text" th:field="*{memberEmail}" th:placeholder="이메일" id="emailCk" onblur="emailCheck()" ><br>
+    <p id="emailResult"></p>
+    <p th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}" th:errorclass="fieldError"></p>
+    <input type="text" th:field="*{memberPassword}" th:placeholder="비밀번호"><br>
+    <p th:if="${#fields.hasErrors('memberPassword')}" th:errors="*{memberPassword}" th:errorclass="fieldError"></p>
+    <input type="text" th:field="*{memberName}" th:placeholder="이름"><br>
+    <p th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}" th:errorclass="fieldError"></p>
+    프로필사진 <input type="file" th:field="*{memberFile}"><br>
+    <p th:if="${#fields.hasErrors('memberFile')}" th:errors="*{memberFile}" th:errorclass="fieldError"></p>
+    <input type="button" value="회원가입" onclick="membersave()">
+</form>
+</body>
+</html>

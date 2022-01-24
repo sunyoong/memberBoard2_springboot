@@ -1,0 +1,19 @@
+server:
+  port: 8096
+
+# db
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/memberboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: memberboard
+    password: 1234
+  timeleaf:
+    cache: false
+  # JPA 관련 설정
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+

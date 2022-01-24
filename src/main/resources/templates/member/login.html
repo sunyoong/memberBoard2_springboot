@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h2>login.html</h2>
+<form action="/member/login" method="post" th:object="${login}">
+  <div th:if="${#fields.hasGlobalErrors()}">
+    <p class="fieldError" th:each="err: ${#fields.globalErrors()}" th:text="${err}"></p>
+  </div>
+  <input type="text" th:field="*{loginEmail}">
+  <p th:if="${#fields.hasErrors('loginEmail')}" th:errors="*{loginEmail}" th:errorclass="fieldError"></p>
+  <input type="text" th:field="*{loginPassword}">
+  <p th:if="${#fields.hasErrors('loginPassword')}" th:errors="*{loginPassword}" th:errorclass="fieldError"></p>
+  <input type="submit" value="로그인">
+</form>
+</body>
+</html>
