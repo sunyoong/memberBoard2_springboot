@@ -22,5 +22,5 @@ public interface MemberService {
 
     void delete(Long memberId);
 
-    void update(MemberUpdateDTO memberUpdateDTO);
+    void update(MemberUpdateDTO memberUpdateDTO) throws IOException;
 }

@@ -26,7 +26,7 @@
 
         function update2(){
             // ajax활용해서 해보기
-            const id = $("#memberId").val();
+            const loginId = $("#memberId").val();
             const email = $("#memberEmail").val();
             // 비밀번호 확인
             const password = $("#memberPassword").val();
@@ -38,7 +38,7 @@
             const file = $("#memberFile").val();
 
             const updateData = JSON.stringify({
-                memberId : id,
+                memberId : loginId,
                 memberEmail : email,
                 memberPassword : pwChange,
                 memberName : name,
@@ -48,8 +48,9 @@
             console.log(updateData);
             console.log(password);
             console.log(DBpw);
+            console.log(loginId);
 
-            const reqUrl = "/member/" + id;
+            const reqUrl = "/member/" + loginId ;
 
 
             if(password == DBpw){
@@ -61,7 +62,7 @@
                     data : updateData,
                     success : function(result){
                         console.log(result);
-                        location.href="/member/" + id;
+                        location.href="/member/" + loginId;
                     },
                     error: function(){
                         alert('ajax실패');

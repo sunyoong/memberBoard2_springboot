@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -117,9 +116,31 @@ public class MemberServiceImpl implements MemberService{
 
     // 정보수정(ajax)
     @Override
-    public void update(MemberUpdateDTO memberUpdateDTO) {
+    public void update(MemberUpdateDTO memberUpdateDTO) throws IOException {
+        if(memberUpdateDTO.getMemberUpdateFile()!=null) {
+            // 파일첨부 기능
+            MultipartFile m_file = memberUpdateDTO.getMemberUpdateFile(); // db에 저장된 파일
+            String m_fileName = m_file.getOriginalFilename(); // 파일이름을 db에 저장하기 위해 m_file에서 이름을 가져옴
+            m_fileName = System.currentTimeMillis() + "-" + m_fileName; // 파일이름 구분하기 위해 현재시간을 숫자로 나타낸것? 을 앞에 추가함
+            System.out.println("m_fileName = " + m_fileName);
+
+            String savePath = "C:\\development_psy\\source\\springboot\\MemberBoard2\\src\\main\\resources\\static\\member\\upload\\" + m_fileName;
+            //  => 파일 저장경로\\ + m_fileName
+
+            if (!m_file.isEmpty()) {
+                m_file.transferTo(new File(savePath));
+                // 파일이 비어있지 않으면 savePath에 저장하겠다
+            }
+            memberUpdateDTO.setMemberUpdateFileName(m_fileName);
+            //dto에 파일이름 담음
+
+            // dto-> entity 변환
+        }
         MemberEntity memberEntity = MemberEntity.updateMember(memberUpdateDTO);
         //update할떄는 save로 하기
-        mr.save(memberEntity);
+       mr.save(memberEntity);
+
+
+
     }
 }

@@ -16,20 +16,19 @@ public class MemberUpdateDTO {
     private String memberEmail;
     private String memberPassword;
     private String memberName;
-    private MultipartFile memberFile;
-    private String memberFileName;
+    private MultipartFile memberUpdateFile;
+    private String memberUpdateFileName;
     private LocalDateTime updateDate;
 
     // 작성정보 저장
 
-
-    public MemberUpdateDTO(Long memberId, String memberEmail, String memberPassword, String memberName, MultipartFile memberFile, String memberFileName) {
-        this.memberId = memberId;
-        this.memberEmail = memberEmail;
-        this.memberPassword = memberPassword;
-        this.memberName = memberName;
-        this.memberFile = memberFile;
-        this.memberFileName = memberFileName;
-    }
+//
+//    public MemberUpdateDTO(Long memberId, String memberEmail, String memberPassword, String memberName, String memberFileName) {
+//        this.memberId = memberId;
+//        this.memberEmail = memberEmail;
+//        this.memberPassword = memberPassword;
+//        this.memberName = memberName;
+//        this.memberFileName = memberFileName;
+//    }
 }
 

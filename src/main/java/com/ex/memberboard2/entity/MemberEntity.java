@@ -59,7 +59,7 @@ public class MemberEntity extends com.ex.memberboard2.entity.BaseEntity {
         memberEntity.setMemberEmail(memberUpdateDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberUpdateDTO.getMemberPassword());
         memberEntity.setMemberName(memberUpdateDTO.getMemberName());
-        memberEntity.setMemberFileName(memberUpdateDTO.getMemberFileName());
+        memberEntity.setMemberFileName(memberUpdateDTO.getMemberUpdateFileName());
         memberEntity.setUpdateTime(LocalDateTime.now());
         return memberEntity;
 

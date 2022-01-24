@@ -59,7 +59,7 @@ public class MemberController {
     }
 
     // 회원목록 조회
-    @GetMapping("/findAll")
+    @GetMapping("/")
     public String findAll(@ModelAttribute MemberDetailDTO memberDetailDTO, Model model){
         List<MemberDetailDTO> memberList = ms.findAll();
         model.addAttribute("memberList", memberList);
@@ -108,7 +108,7 @@ public class MemberController {
     }
 
     // 로그아웃
-    @GetMapping("logout")
+    @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
         return "index";
@@ -143,8 +143,8 @@ public class MemberController {
 
 
     // 회원정보 상세조회
-    @GetMapping("/detail/{loginId}")
-    public String detailform(@PathVariable("loginId") Long memberId, Model model){
+    @GetMapping("/{loginId}")
+    public String findById(@PathVariable("loginId") Long memberId, Model model){
         MemberDetailDTO memberDetailDTO = ms.findById(memberId);
         model.addAttribute("member", memberDetailDTO);
         return "member/detail";
@@ -164,8 +164,8 @@ public class MemberController {
 
 
     // 정보수정처리(ajax)
-    @PutMapping("{memberId}")
-    public ResponseEntity update2(@RequestBody MemberUpdateDTO memberUpdateDTO){
+    @PutMapping("/{memberId}")
+    public ResponseEntity update2(@RequestBody MemberUpdateDTO memberUpdateDTO) throws IOException {
         ms.update(memberUpdateDTO);
         return new ResponseEntity(HttpStatus.OK);
     }
