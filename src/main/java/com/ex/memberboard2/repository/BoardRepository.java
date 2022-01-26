@@ -1,4 +1,7 @@
 package com.ex.memberboard2.repository;
 
-public interface BoardRepository {
+import com.ex.memberboard2.entity.BoardEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 }

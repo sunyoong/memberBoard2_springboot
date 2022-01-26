@@ -131,7 +131,7 @@ public class MemberController {
     @GetMapping("/delete/{memberId}")
     public String delete(@PathVariable("memberId") Long memberId){
         ms.delete(memberId);
-        return "redirect:/member/findAll";
+        return "redirect:/member/";
     }
 
 
@@ -165,7 +165,7 @@ public class MemberController {
 
     // 정보수정처리(ajax)
     @PutMapping("/{memberId}")
-    public ResponseEntity update2(@RequestBody MemberUpdateDTO memberUpdateDTO) throws IOException {
+    public ResponseEntity update(@RequestBody MemberUpdateDTO memberUpdateDTO) throws IOException {
         ms.update(memberUpdateDTO);
         return new ResponseEntity(HttpStatus.OK);
     }

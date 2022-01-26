@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>boardDetail</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">글번호</th>
+        <th scope="col">작성자</th>
+        <th scope="col">제목</th>
+        <th scope="col">내용</th>
+        <th scope="col">작성일</th>
+        <th scope="col">파일</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${board.boardId}"></td>
+        <td th:text="${board.memberEmail}"></td>
+        <td th:text="${board.boardTitle}"></td>
+        <td th:text="${board.boardContents}"></td>
+        <td th:text="${board.boardSaveDate}"></td>
+        <td th:text="${board.boardFile}"></td>
+        <td><img alt="업로드이미지" th:src="@{|/upload/${board.boardFileName}|}"/></td>
+
+        <th:block th:if="${board.memberEmail==session.loginEmail}">
+        <td><a th:href="@{|/board/update/${board.boardId}|}">게시글수정</a></td>
+        <td><a th:href="@{|/board/delete/${board.boardId}|}">게시글삭제</a></td>
+        </th:block>
+
+        <th:block th:if="${session.loginId=='admin'}">
+        <td><a th:href="@{|/board/delete/${board.boardId}|}">게시글삭제</a></td>
+        </th:block>
+
+    </tr>
+    </tbody>
+</table>
+
+<!--댓글-->
+<!--댓글쓰는곳-->
+<div id="comment-write">
+    <input type="text" id="commentWriter" th:value="${session.loginEmail}" readonly><br>
+    <input type="text" id="commentContents" placeholder="작성내용"><br>
+    <button id="commentSave">댓글등록</button>
+</div>
+
+
+<div id="comment-area">
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>댓글번호</th>-->
+<!--            <th>작성자</th>-->
+<!--            <th>내용</th>-->
+<!--            <th>게시글번호</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr></tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+
+</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+    $('#commentSave').click(function(){
+        console.log('댓글');
+        const commentWriter = $('#commentWriter').val(); // 댓글작성자
+        console.log(commentWriter);
+        const commentContents = $('#commentContents').val(); // 내용
+        console.log(commentContents);
+        const boardId = '[[${board.boardId}]]'; // 게시글번호
+        console.log(boardId);
+
+
+        // 에이작스로 댓글정보 저장
+        $.ajax({
+            type: 'post',
+            url : '/comment/save',
+            data: {
+                'commentWriter' : commentWriter,
+                'commentContents' : commentContents,
+                'boardId' : boardId
+            },
+            dataType: 'json',
+            success: function(result){
+                console.log(result);
+                let output="";
+                output+="<table>\n" +
+                    "    <thead>\n" +
+                    "    <tr>\n" +
+                    "        <th>작성자</th>\n" +
+                    "        <th>내용</th>\n" +
+                    "        <th>게시글번호</th>\n" +
+                    "    </tr>\n" +
+                    "    </thead>\n" +
+                    "    <tbody>\n" +
+                    "    <tr>\n" +
+                    "      <td>" + result.commentWriter + "</td>\n" +
+                    "      <td>" + result.commentContents + "</td>\n" +
+                    "      <td>" + result.boardId + "</td>\n" +
+                    "    </tr>\n" +
+                    "    </tbody>\n" +
+                    "</table>";
+                document.getElementById("comment-area").innerHTML = output;
+
+            },
+            error: function(){
+                alert('ajax실패');
+            }
+
+
+        });
+
+
+
+    });
+
+
+</script>
+
+</html>

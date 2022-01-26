@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<!--    <script>-->
+<!--    const update = () => {-->
+<!--        const boardId = '[[${board.boardId}]]'-->
+<!--        console.log(boardId);-->
+<!--        const memberEmail = $('#memberEmail').val(); // 제이쿼리로 아이디값 가져오기-->
+<!--        const boardTitle = $('#boardTitle').val();-->
+<!--        const boardContents = $('#boardContents').val();-->
+<!--        const boardFile = $('#boardFile').val();-->
+
+<!--        const updateData = JSON.stringify({-->
+<!--            boardId : boardId,-->
+<!--            memberEmail : memberEmail,-->
+<!--            boardTitle : boardTitle,-->
+<!--            boardContents : boardContents,-->
+<!--            boardFile : boardFile-->
+<!--        })-->
+
+<!--        console.log(updateData);-->
+
+<!--        const reqUrl = "/board/" + boardId;-->
+
+<!--        // 에이작스로 데이터 보내기-->
+<!--        $.ajax({-->
+<!--            type: 'put',-->
+<!--            url : reqUrl,-->
+<!--            contentType: "application/json",-->
+<!--            data: updateData,-->
+<!--            success : function(result){-->
+<!--                location.href="/board/detail" + boardId;-->
+<!--            },-->
+<!--            error: function(){-->
+<!--                alert('ajax실패');-->
+<!--            }-->
+
+
+
+<!--        })-->
+
+
+
+<!--    }-->
+
+    </script>
+
+
+
+</head>
+<body>
+<form th:action="@{|/board/${board.boardId}|}" method="post" enctype="multipart/form-data">
+    <input type="hidden" id="boardId" name="boardId" th:value="${board.boardId}">
+    작성자 : <input type="text" id="memberEmail" name="memberEmail" th:value="${session.loginEmail}" readonly>
+    제목 : <input type="text" id="boardTitle" name="boardTitle" th:value="${board.boardTitle}">
+    내용 : <input type="text" id="boardContents" name="boardContents" th:value="${board.boardContents}">
+    첨부파일 : <input type="file" id="boardFile" name="boardFile" th:value="*{board.boardFile}">
+<!--    <input type="button" value="수정하기" th:onclick="update()">-->
+    <input type="submit" value="수정하기">
+</form>
+
+
+
+
+</body>
+
+
+
+
+</html>

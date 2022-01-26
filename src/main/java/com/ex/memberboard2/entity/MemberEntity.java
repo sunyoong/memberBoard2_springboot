@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,8 +40,13 @@ public class MemberEntity extends com.ex.memberboard2.entity.BaseEntity {
 
     // 참조관계 설정(BOARD)
     // 회원:게시글 = 1:N(일대다 관계)
-//    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//    private List<BoardEntity> boardEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BoardEntity> boardEntityList = new ArrayList<>();
+
+    // 회원 : 댓글 = 1:n
+    // 회원 : 댓글(1:n)
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
 
 
     public static MemberEntity saveMember(MemberSaveDTO memberSaveDTO){
