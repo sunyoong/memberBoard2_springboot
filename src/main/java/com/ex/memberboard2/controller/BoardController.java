@@ -76,19 +76,19 @@ public class BoardController {
         return "board/update";
     }
 
-//    // ajax로 수정하기
-//    @PutMapping("/${boardId}")
-//    public ResponseEntity update(@RequestBody BoardUpdateDTO boardUpdateDTO){
-//        bs.update(boardUpdateDTO);
-//        return new ResponseEntity(boardUpdateDTO, HttpStatus.OK);
-//    }
-//
-
-    @PostMapping("/{boardId}")
-    public String update(@ModelAttribute BoardUpdateDTO boardUpdateDTO){
+    // ajax로 수정하기
+    @PutMapping("/{boardId}")
+    public ResponseEntity update(@RequestBody BoardUpdateDTO boardUpdateDTO){
         bs.update(boardUpdateDTO);
-        return "redirect:/board/" + boardUpdateDTO.getBoardId();
+        return new ResponseEntity(boardUpdateDTO, HttpStatus.OK);
     }
+
+
+//    @PostMapping("/{boardId}")
+//    public String update(@ModelAttribute BoardUpdateDTO boardUpdateDTO){
+//        bs.update(boardUpdateDTO);
+//        return "redirect:/board/" + boardUpdateDTO.getBoardId();
+//    }
 
 
 

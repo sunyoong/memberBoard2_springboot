@@ -166,6 +166,7 @@ public class MemberController {
     // 정보수정처리(ajax)
     @PutMapping("/{memberId}")
     public ResponseEntity update(@RequestBody MemberUpdateDTO memberUpdateDTO) throws IOException {
+        System.out.println("memberUpdateDTO = " + memberUpdateDTO);
         ms.update(memberUpdateDTO);
         return new ResponseEntity(HttpStatus.OK);
     }

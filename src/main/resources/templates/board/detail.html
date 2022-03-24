@@ -15,6 +15,8 @@
         <th scope="col">내용</th>
         <th scope="col">작성일</th>
         <th scope="col">파일</th>
+        <th scope="col">수정</th>
+        <th scope="col">삭제</th>
 
     </tr>
     </thead>
@@ -25,10 +27,10 @@
         <td th:text="${board.boardTitle}"></td>
         <td th:text="${board.boardContents}"></td>
         <td th:text="${board.boardSaveDate}"></td>
-        <td th:text="${board.boardFile}"></td>
+        <td th:file="${board.boardFile}"></td>
         <td><img alt="업로드이미지" th:src="@{|/upload/${board.boardFileName}|}"/></td>
 
-        <th:block th:if="${board.memberEmail==session.loginEmail}">
+        <th:block th:if="${board.memberEmail.equals(session.loginEmail)}">
         <td><a th:href="@{|/board/update/${board.boardId}|}">게시글수정</a></td>
         <td><a th:href="@{|/board/delete/${board.boardId}|}">게시글삭제</a></td>
         </th:block>
